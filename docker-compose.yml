@@ -1,0 +1,29 @@
+version: '3'  # version of compose format 
+
+services:
+  neural-network-service:
+    build: ./deep_net  # path is relative to docker-compose.yml localtion
+    volumes:
+      - ./deep_net:/usr/src/app # mount point
+    ports:
+      - 5001:3000  # host:container
+
+  go-service:
+    build: ./go_server
+    volumes:
+      - ./go_server:/go/src/github.com/kudou-reira/myproject
+    expose:
+      - "8080"
+    ports:
+      - 8080:8080
+
+  react-app:
+    container_name: react-app
+    build: ./react
+    volumes:
+      - './react:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development

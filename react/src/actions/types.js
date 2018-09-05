@@ -1,0 +1,1 @@
+export const FETCH_DEEP_API = 'fetch_api';
